@@ -1,0 +1,42 @@
+---
+/**
+ * Primary download CTA. Renders a real download link only when siteConfig.downloadUrl is a
+ * verified https URL; otherwise it points honestly at the installation guide.
+ */
+import { siteConfig } from '../config/site';
+import { url } from '../lib/url';
+
+interface Props {
+  variant?: 'primary' | 'ghost';
+  /** Show the short status line under the button. */
+  showStatus?: boolean;
+}
+const { variant = 'primary', showStatus = false } = Astro.props;
+const live = siteConfig.downloadUrl;
+---
+
+{
+  live ? (
+    <a class={`btn btn--${variant}`} href={live} rel="noopener">
+      Download for Android
+    </a>
+  ) : (
+    <a class={`btn btn--${variant}`} href={url('/download/#install')}>
+      View installation guide
+    </a>
+  )
+}
+{
+  showStatus && !live && (
+    <p class="cta-status small muted">
+      Public download link coming soon · Android {siteConfig.minAndroid}+
+    </p>
+  )
+}
+
+<style>
+  .cta-status {
+    flex-basis: 100%;
+    margin: var(--sp-2) 0 0;
+  }
+</style>

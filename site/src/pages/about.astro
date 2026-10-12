@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import CtaDownload from '../components/CtaDownload.astro';
+import { Image } from 'astro:assets';
+import helmet from '../assets/helmet.png';
+import { siteConfig } from '../config/site';
+import { url } from '../lib/url';
+---
+
+<BaseLayout
+  title="About"
+  description="About Trillian — Driving Coach: a free GPS lap timer and post-session coach for Android, built for track-day drivers, amateur racers and karters who want honest data about their driving."
+>
+  <PageHero eyebrow="About" title="Built to tell you the truth about your laps">
+    Trillian is a GPS lap timer and post-session driving coach for Android — and it’s 100% free.
+  </PageHero>
+
+  <Section labelledby="why-title">
+    <div class="split">
+      <div>
+        <h2 id="why-title">Why Trillian exists</h2>
+        <p>
+          Track days go fast. You come in with a feeling about how it went, but feelings aren’t lap
+          times. Trillian records your session with your phone’s GPS, finds your laps, and gives you
+          the kind of debrief a race engineer would — so you can see where the time is, not guess.
+        </p>
+        <h2>Who it’s for</h2>
+        <p>
+          Track-day drivers, amateur racers, karters and motorsport enthusiasts who want to measure
+          their laps and understand their progress, without specialist timing hardware.
+        </p>
+      </div>
+      <Image
+        src={helmet}
+        alt="The Trillian helmet emblem"
+        width={280}
+        height={280}
+        class="emblem"
+      />
+    </div>
+  </Section>
+
+  <Section tone="alt" labelledby="principles-title">
+    <h2 id="principles-title">How we build it</h2>
+    <div class="grid grid--3">
+      <div class="card">
+        <h3>Honest over impressive</h3>
+        <p>
+          The app shows fewer coaching cards rather than make something up, leaves sector times
+          blank rather than guess, and won’t show a Dream Lap it can’t stand behind.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Your data, your phone</h3>
+        <p>
+          No account, no server and no analytics. Recording and analysis happen on your device, and
+          it works in flight mode.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Free, simply</h3>
+        <p>{siteConfig.freeStatement} No in-app purchases, no ads.</p>
+      </div>
+    </div>
+  </Section>
+
+  <Section labelledby="now-title">
+    <h2 id="now-title">What’s here today — and what isn’t</h2>
+    <div class="grid grid--2">
+      <div class="card">
+        <h3>Available now</h3>
+        <ul>
+          <li>Android app (Android {siteConfig.minAndroid}+)</li>
+          <li>GPS lap detection, circuit library, sectors and deltas</li>
+          <li>Speed charts, track maps, corner and braking analysis</li>
+          <li>Post-session coaching insights and share cards</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Not available</h3>
+        <ul>
+          <li>iPhone / iOS</li>
+          <li>Live or audio coaching while you drive</li>
+          <li>Accounts and cloud backup — planned for a future version</li>
+        </ul>
+      </div>
+    </div>
+    <p class="contact">
+      Get in touch: <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
+    </p>
+    <div class="btn-row">
+      <CtaDownload />
+      <a class="btn btn--ghost" href={url('/features/')}>Explore the features</a>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  :global(.emblem) {
+    border-radius: 50%;
+    margin-inline: auto;
+    filter: drop-shadow(0 10px 30px rgb(0 0 0 / 0.5));
+  }
+  .card ul {
+    padding-left: 1.2rem;
+  }
+  .contact {
+    margin-top: var(--sp-6);
+  }
+</style>

@@ -1,0 +1,366 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import CtaDownload from '../components/CtaDownload.astro';
+import PhoneFrame from '../components/PhoneFrame.astro';
+import LapTableMock from '../components/LapTableMock.astro';
+import StepList from '../components/StepList.astro';
+import FaqItem from '../components/FaqItem.astro';
+import Callout from '../components/Callout.astro';
+import { Image } from 'astro:assets';
+import helmet from '../assets/helmet.png';
+import homeShot from '../assets/screens/home.png';
+import coachShot from '../assets/screens/coach.png';
+import { siteConfig } from '../config/site';
+import { coachingCards, faqPreview } from '../content/data';
+import { url } from '../lib/url';
+
+const steps = [
+  {
+    title: 'Get a GPS fix',
+    body: 'Open the app a couple of minutes before you walk out. It starts finding satellites while you’re still in the paddock.',
+  },
+  {
+    title: 'Choose your circuit',
+    body: 'Pick a circuit from the built-in or saved list — or capture a new start/finish line in two taps at the track edge.',
+  },
+  {
+    title: 'Record and drive',
+    body: 'Mount the phone, tap Start Recording and drive. The screen can be off; recording continues in the background.',
+  },
+  {
+    title: 'Review and learn',
+    body: 'Stop recording and your laps appear immediately — times, sectors, speed charts, track map and coaching cards.',
+  },
+];
+---
+
+<BaseLayout
+  title={siteConfig.fullName}
+  description="Trillian is a free GPS lap timer and post-session driving coach for Android. Record track sessions, compare laps and sectors, and get honest, data-driven coaching insights — offline, with no account."
+>
+  <div class="free-banner" role="note">
+    <div class="container">
+      <span class="pill">FREE</span>
+      <span>{siteConfig.freeStatement}</span>
+    </div>
+  </div>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">GPS lap timer · Post-session coach · Android</p>
+        <h1 id="hero-title">{siteConfig.tagline}</h1>
+        <p class="lead">{siteConfig.subheadline}</p>
+        <div class="btn-row">
+          <CtaDownload showStatus />
+          <a class="btn btn--ghost" href={url('/features/')}>Explore the features</a>
+        </div>
+        <ul class="hero-facts" aria-label="Key facts">
+          <li><span class="mono">Android {siteConfig.minAndroid}+</span></li>
+          <li>No account</li>
+          <li>Works in flight mode</li>
+          <li>Data stays on your phone</li>
+        </ul>
+      </div>
+      <div class="hero-visual">
+        <Image src={helmet} alt="" width={160} height={160} class="hero-emblem" loading="eager" />
+        <PhoneFrame
+          src={homeShot}
+          eager
+          width={300}
+          alt="Trillian home screen showing the helmet emblem, a best lap of 1:10.000 and a list of recent sessions with lap times and consistency scores."
+        />
+      </div>
+    </div>
+  </section>
+
+  <Section id="features" labelledby="features-title">
+    <SectionHeading
+      id="features-title"
+      eyebrow="What it does"
+      title="Everything you need to read a track day"
+    >
+      Built for track-day drivers, amateur racers and karters who want to measure their laps and
+      understand their progress.
+    </SectionHeading>
+    <div class="grid grid--3">
+      <FeatureCard tag="LAPS" title="Automatic lap detection">
+        <p>
+          Set a start/finish line once and every crossing is timed for you from your GPS trace — no
+          buttons to press while you drive.
+        </p>
+      </FeatureCard>
+      <FeatureCard tag="CIRCUITS" title="Built-in & saved circuits">
+        <p>
+          Choose a circuit with a surveyed start/finish line, or capture a new one and save it for
+          next time.
+        </p>
+      </FeatureCard>
+      <FeatureCard tag="COMPARE" title="Lap times, sectors & deltas">
+        <p>
+          See every lap, your fastest lap, three sector times and the delta to your best — in one
+          table.
+        </p>
+      </FeatureCard>
+      <FeatureCard tag="TELEMETRY" title="Speed traces & track maps">
+        <p>
+          Compare speed by distance, see where you braked and find your apex speed in every corner
+          the app detects.
+        </p>
+      </FeatureCard>
+      <FeatureCard tag="COACH" title="Post-session coaching">
+        <p>
+          Up to seven insight cards — from consistency to your Dream Lap — shown only when your data
+          supports them.
+        </p>
+      </FeatureCard>
+      <FeatureCard tag="OFFLINE" title="Offline-first, on-device">
+        <p>Recording and analysis happen on your phone. No signal at the circuit? No problem.</p>
+      </FeatureCard>
+    </div>
+    <p class="more"><a href={url('/features/')}>See all features →</a></p>
+  </Section>
+
+  <Section id="laps" tone="alt" labelledby="laps-title">
+    <div class="split">
+      <div>
+        <SectionHeading
+          id="laps-title"
+          eyebrow="Lap timing"
+          title="Find the time you’ve already driven"
+        >
+          Every lap is split into three sectors of equal distance, so you can see exactly which part
+          of the track is costing you — and how quick a lap stitched from your best sectors would
+          be.
+        </SectionHeading>
+        <ul class="ticks">
+          <li>Fastest lap marked automatically, with deltas for every other lap</li>
+          <li>Sector times you can compare lap against lap</li>
+          <li>Dream Lap: your best S1 + S2 + S3, shown only when the data is sound</li>
+        </ul>
+        <p class="small muted">
+          Sectors are the app’s own equal thirds by distance — not the circuit’s official timing
+          sectors.
+        </p>
+      </div>
+      <LapTableMock />
+    </div>
+  </Section>
+
+  <Section id="coaching" labelledby="coach-title">
+    <div class="split split--reverse">
+      <div>
+        <SectionHeading
+          id="coach-title"
+          eyebrow="Post-session coaching"
+          title="Honest insights after every session"
+        >
+          When you stop recording, Trillian reads your laps and tells you what it can actually see
+          in them. It shows fewer cards rather than make something up.
+        </SectionHeading>
+        <ul class="card-list">
+          {
+            coachingCards.map((c) => (
+              <li>
+                <strong>{c.name}</strong>
+                <span class="muted small">{c.when}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="small muted">Coaching happens after the session — never while you’re driving.</p>
+      </div>
+      <PhoneFrame
+        src={coachShot}
+        width={300}
+        alt="Trillian Coach tab showing an Offline Insights card with a 91.4% consistency score, followed by the cards Lap 2 Was Your Fastest, Top Speed 69 km/h and Solid Consistency."
+      />
+    </div>
+  </Section>
+
+  <Section id="how" tone="alt" labelledby="how-title">
+    <SectionHeading
+      id="how-title"
+      eyebrow="How it works"
+      title="From paddock to debrief in four steps"
+    />
+    <StepList steps={steps} />
+    <p class="more"><a href={url('/how-it-works/')}>Read the full walkthrough →</a></p>
+  </Section>
+
+  <Section id="privacy" labelledby="privacy-title">
+    <div class="split">
+      <div>
+        <SectionHeading
+          id="privacy-title"
+          eyebrow="Offline-first"
+          title="Your laps stay on your phone"
+        >
+          Lap detection, speed charts, track maps and coaching are all computed on the device from
+          your own GPS recording.
+        </SectionHeading>
+        <ul class="ticks">
+          <li>No account, password or email address</li>
+          <li>Works fully in flight mode — the app does not hold Android’s internet permission</li>
+          <li>Location is used only during a session you start, with a visible notification</li>
+          <li>Nothing leaves your phone unless you share or export it yourself</li>
+        </ul>
+        <p><a href={url('/privacy/')}>Read the privacy policy →</a></p>
+      </div>
+      <div class="grid">
+        <Callout title={`Android ${siteConfig.minAndroid} or newer`}>
+          <p>
+            You’ll need an Android phone with GPS and a secure mount. Keep the phone powered for
+            long sessions — recording uses roughly 10–15% battery per hour.
+          </p>
+        </Callout>
+        <Callout tone="warn" title="Good GPS, good data">
+          <p>
+            Results depend on your phone’s GPS and a clear view of the sky. Lap times are for
+            comparing your own laps — not a substitute for professional timing.
+          </p>
+        </Callout>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="faq" tone="alt" labelledby="faq-title">
+    <div class="container--narrow faq-wrap">
+      <SectionHeading id="faq-title" eyebrow="FAQ" title="Quick answers" />
+      {
+        faqPreview.map((f) => (
+          <FaqItem question={f.q}>
+            <Fragment set:html={f.a} />
+          </FaqItem>
+        ))
+      }
+      <p class="more"><a href={url('/faq/')}>All frequently asked questions →</a></p>
+    </div>
+  </Section>
+
+  <Section id="get" labelledby="get-title">
+    <div class="final-cta">
+      <h2 id="get-title">Ready for your next track day?</h2>
+      <p class="lead">{siteConfig.freeStatement}</p>
+      <div class="btn-row center">
+        <CtaDownload showStatus />
+        <a class="btn btn--ghost" href={url('/guide/')}>Read the guide</a>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .free-banner {
+    background: linear-gradient(90deg, rgb(26 95 209 / 0.25), rgb(224 184 74 / 0.12));
+    border-bottom: 1px solid var(--border);
+    font-size: var(--fs-sm);
+    color: var(--text);
+  }
+  .free-banner .container {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--sp-2);
+    text-align: center;
+    flex-wrap: wrap;
+  }
+  .free-banner .pill {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .hero {
+    padding-block: var(--sp-8) var(--sp-8);
+    background:
+      radial-gradient(60rem 30rem at 85% 10%, rgb(75 143 255 / 0.14), transparent 60%),
+      radial-gradient(40rem 20rem at 0% 100%, rgb(167 139 250 / 0.08), transparent 60%);
+  }
+  .hero .btn-row {
+    margin-top: var(--sp-5);
+  }
+  .hero-facts {
+    list-style: none;
+    padding: 0;
+    margin: var(--sp-6) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-5);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+  .hero-facts li {
+    margin: 0;
+  }
+  .hero-facts li::before {
+    content: '▸ ';
+    color: var(--accent);
+  }
+  .hero-visual {
+    position: relative;
+  }
+  .hero-visual :global(.hero-emblem) {
+    position: absolute;
+    left: 0;
+    top: 8%;
+    width: clamp(80px, 18vw, 140px);
+    height: auto;
+    border-radius: 50%;
+    z-index: 1;
+    filter: drop-shadow(0 10px 25px rgb(0 0 0 / 0.5));
+  }
+  .more {
+    margin-top: var(--sp-5);
+  }
+  .ticks {
+    list-style: none;
+    padding: 0;
+  }
+  .ticks li {
+    padding-left: 1.6rem;
+    position: relative;
+  }
+  .ticks li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--good);
+    font-weight: 700;
+  }
+  .card-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-2);
+  }
+  .card-list li {
+    margin: 0;
+    display: grid;
+    gap: 0.1rem;
+    padding: var(--sp-3) var(--sp-4);
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .faq-wrap {
+    width: 100%;
+  }
+  .final-cta {
+    text-align: center;
+    padding: var(--sp-7) var(--sp-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(40rem 15rem at 50% 0%, rgb(75 143 255 / 0.16), transparent 70%),
+      var(--surface);
+  }
+  .final-cta .lead {
+    margin-inline: auto;
+  }
+  .center {
+    justify-content: center;
+  }
+</style>

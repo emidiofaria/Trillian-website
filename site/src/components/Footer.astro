@@ -1,0 +1,99 @@
+---
+import { siteConfig, footerNav } from '../config/site';
+import { url } from '../lib/url';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container grid-f">
+    <div>
+      <p class="brand">TRILLIAN <span>Driving Coach</span></p>
+      <p class="muted small">
+        GPS lap timer and post-session driving coach for Android {siteConfig.minAndroid}+.
+      </p>
+      <p class="free small"><strong>100% free</strong> — no subscription or premium tier.</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        {
+          footerNav.map((item) => (
+            <li>
+              <a href={url(item.href)}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <div>
+      <p class="small muted">Questions about the app or your privacy?</p>
+      <p class="small">
+        <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
+      </p>
+    </div>
+  </div>
+  <div class="container legal small muted">
+    <p>
+      © {year} Trillian. Lap times are GPS-based and meant for comparing your own laps — not a substitute
+      for professional timing. Drive on closed circuits only.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--sp-9);
+    border-top: 1px solid var(--border);
+    background: var(--bg-alt);
+    padding-top: var(--sp-7);
+  }
+  .grid-f {
+    display: grid;
+    gap: var(--sp-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  }
+  .brand {
+    color: var(--text);
+    font-weight: 800;
+    letter-spacing: 0.2em;
+  }
+  .brand span {
+    display: block;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    font-size: var(--fs-xs);
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .free {
+    color: var(--sector-3);
+  }
+  .free strong {
+    color: inherit;
+  }
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    columns: 2;
+  }
+  nav li {
+    margin: 0 0 var(--sp-2);
+    break-inside: avoid;
+  }
+  nav a {
+    color: var(--text-soft);
+    text-decoration: none;
+  }
+  nav a:hover {
+    color: var(--text);
+    text-decoration: underline;
+  }
+  .legal {
+    border-top: 1px solid var(--border);
+    margin-top: var(--sp-6);
+    padding-block: var(--sp-5);
+  }
+  .legal p {
+    margin: 0;
+  }
+</style>

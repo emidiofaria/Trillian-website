@@ -1,0 +1,67 @@
+---
+export interface Step {
+  title: string;
+  body: string;
+}
+interface Props {
+  steps: Step[];
+  /** Render horizontally on wide screens (homepage) or as a vertical timeline. */
+  layout?: 'row' | 'column';
+}
+const { steps, layout = 'row' } = Astro.props;
+---
+
+<ol class:list={['steps', `steps--${layout}`]}>
+  {
+    steps.map((s, i) => (
+      <li class="step">
+        <span class="num" aria-hidden="true">
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <h3>{s.title}</h3>
+        <p set:html={s.body} />
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--sp-5);
+  }
+  .steps--row {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  }
+  .step {
+    margin: 0;
+    position: relative;
+    padding: var(--sp-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .steps--column .step {
+    padding-left: 5rem;
+  }
+  .num {
+    display: block;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    margin-bottom: var(--sp-3);
+  }
+  .steps--column .num {
+    position: absolute;
+    left: var(--sp-5);
+    top: var(--sp-5);
+  }
+  .step p {
+    margin: 0;
+    font-size: var(--fs-sm);
+  }
+</style>

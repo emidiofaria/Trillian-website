@@ -1,0 +1,159 @@
+---
+/**
+ * Illustrative lap table built from the USER_MANUAL §5.2 Dream Lap example
+ * (best lap 1:12.4; best S1 on lap 3, S2 on lap 7, S3 on lap 5; Dream Lap 1:10.9).
+ * Clearly labelled as an example — not real user data.
+ */
+const laps = [
+  [25.9, 26.4, 25.8],
+  [24.8, 25.6, 24.3],
+  [23.5, 25.2, 24.4],
+  [24.0, 25.1, 24.1],
+  [24.3, 24.8, 23.3],
+  [24.4, 24.6, 23.9],
+  [24.1, 24.1, 24.6],
+].map((s, i) => ({ n: i + 1, s, total: s.reduce((a, b) => a + b, 0) }));
+
+const best = laps.reduce((a, b) => (b.total < a.total ? b : a));
+const bestSector = [0, 1, 2].map((k) => Math.min(...laps.map((l) => l.s[k]!)));
+const dream = bestSector.reduce((a, b) => a + b, 0);
+
+const fmt = (sec: number) => {
+  const m = Math.floor(sec / 60);
+  const s = (sec - m * 60).toFixed(3).padStart(6, '0');
+  return m > 0 ? `${m}:${s}` : s;
+};
+const delta = (sec: number) => (sec === 0 ? '—' : `+${sec.toFixed(3)}`);
+
+interface Props {
+  showDream?: boolean;
+}
+const { showDream = true } = Astro.props;
+---
+
+<figure class="lap-mock">
+  <div class="table-wrap" tabindex="0" role="region" aria-labelledby="lap-mock-cap">
+    <table>
+      <caption id="lap-mock-cap" class="visually-hidden">
+        Illustrative lap table: seven laps with lap time, three sector times and delta to the best
+        lap
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Lap</th>
+          <th scope="col" class="num">Time</th>
+          <th scope="col" class="num"><span class="sw s1" aria-hidden="true"></span>S1</th>
+          <th scope="col" class="num"><span class="sw s2" aria-hidden="true"></span>S2</th>
+          <th scope="col" class="num"><span class="sw s3" aria-hidden="true"></span>S3</th>
+          <th scope="col" class="num">Delta</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          laps.map((l) => (
+            <tr class:list={{ best: l === best }}>
+              <td class="mono">
+                {l.n}
+                {l === best && (
+                  <span class="star" title="Best lap">
+                    ★<span class="visually-hidden"> best lap</span>
+                  </span>
+                )}
+              </td>
+              <td class="num">{fmt(l.total)}</td>
+              {l.s.map((v, k) => (
+                <td class:list={['num', { pb: v === bestSector[k] }]}>{fmt(v)}</td>
+              ))}
+              <td class="num">{delta(l.total - best.total)}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  {
+    showDream && (
+      <div class="dream">
+        <div>
+          <span class="label">Best lap</span>
+          <span class="val">{fmt(best.total)}</span>
+        </div>
+        <div>
+          <span class="label">Dream Lap (best S1 + S2 + S3)</span>
+          <span class="val gold">{fmt(dream)}</span>
+        </div>
+        <div>
+          <span class="label">On the table</span>
+          <span class="val">−{(best.total - dream).toFixed(1)} s</span>
+        </div>
+      </div>
+    )
+  }
+  <figcaption class="small muted">
+    Illustrative example based on the user manual — not real session data. Highlighted sector times
+    are the fastest of the session.
+  </figcaption>
+</figure>
+
+<style>
+  .lap-mock {
+    margin: 0;
+  }
+  .best td {
+    background: rgb(224 184 74 / 0.08);
+    color: var(--text);
+  }
+  .star {
+    color: var(--gold);
+    margin-left: var(--sp-2);
+  }
+  .pb {
+    color: var(--good);
+    font-weight: 700;
+  }
+  .sw {
+    display: inline-block;
+    width: 0.6em;
+    height: 0.6em;
+    border-radius: 2px;
+    margin-right: 0.35em;
+    vertical-align: middle;
+  }
+  .s1 {
+    background: var(--sector-1);
+  }
+  .s2 {
+    background: var(--sector-2);
+  }
+  .s3 {
+    background: var(--sector-3);
+  }
+  .dream {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-3);
+  }
+  .dream > div {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: var(--sp-3) var(--sp-4);
+  }
+  .label {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .val {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--fs-lg);
+    color: var(--text);
+  }
+  .gold {
+    color: var(--gold);
+  }
+</style>

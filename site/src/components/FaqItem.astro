@@ -1,0 +1,51 @@
+---
+interface Props {
+  question: string;
+  id?: string;
+}
+const { question, id } = Astro.props;
+---
+
+<details class="faq-item" id={id}>
+  <summary><span>{question}</span></summary>
+  <div class="answer"><slot /></div>
+</details>
+
+<style>
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    margin-bottom: var(--sp-3);
+  }
+  summary {
+    cursor: pointer;
+    list-style: none;
+    padding: var(--sp-4) var(--sp-5);
+    color: var(--text);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    border-radius: var(--radius);
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::after {
+    content: '+';
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  .faq-item[open] summary::after {
+    content: '−';
+  }
+  .answer {
+    padding: 0 var(--sp-5) var(--sp-4);
+  }
+  .answer :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

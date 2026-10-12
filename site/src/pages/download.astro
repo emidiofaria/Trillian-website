@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Callout from '../components/Callout.astro';
+import { siteConfig } from '../config/site';
+import { url } from '../lib/url';
+
+const live = siteConfig.downloadUrl;
+---
+
+<BaseLayout
+  title="Download"
+  description={`Get Trillian for Android ${siteConfig.minAndroid}+: device requirements, installation steps, permissions and first-launch guide for the free GPS lap timer and driving coach.`}
+>
+  <PageHero eyebrow="Download" title="Get Trillian for Android">
+    {siteConfig.freeStatement} You’ll need an Android phone running {siteConfig.minAndroid} or newer.
+  </PageHero>
+
+  <Section labelledby="status-title">
+    <div class="status card" role="status">
+      <h2 id="status-title">Download status</h2>
+      {
+        live ? (
+          <>
+            <p>Trillian is available to download for Android {siteConfig.minAndroid}+.</p>
+            <a class="btn btn--primary" href={live} rel="noopener">
+              Download for Android
+            </a>
+          </>
+        ) : (
+          <>
+            <p class="badge">
+              <span class="dot" aria-hidden="true" />
+              Public download link coming soon
+            </p>
+            <p>
+              We haven’t published a public download link yet. If you’ve been given the app
+              installer directly, follow the <a href="#install">installation guide</a> below. This
+              page will be updated when public downloads open.
+            </p>
+          </>
+        )
+      }
+    </div>
+  </Section>
+
+  <Section tone="alt" id="requirements" labelledby="req-title">
+    <h2 id="req-title">Requirements</h2>
+    <div class="table-wrap" tabindex="0" role="region" aria-labelledby="req-title">
+      <table>
+        <tbody>
+          <tr
+            ><th scope="row">Operating system</th><td>Android {siteConfig.minAndroid} or newer</td
+            ></tr
+          >
+          <tr
+            ><th scope="row">Hardware</th><td
+              >GPS. Optimised for phones; Android tablets with GPS also work.</td
+            ></tr
+          >
+          <tr><th scope="row">iPhone / iOS</th><td>Not available</td></tr>
+          <tr
+            ><th scope="row">Internet</th><td
+              >Not needed — the app works fully offline and in flight mode</td
+            ></tr
+          >
+          <tr><th scope="row">Account</th><td>None — just a driver name</td></tr>
+          <tr><th scope="row">Storage</th><td>Keep 500 MB or more free while recording</td></tr>
+          <tr
+            ><th scope="row">Battery</th><td
+              >Roughly 10–15% per hour while recording — keep the phone powered for long sessions</td
+            ></tr
+          >
+          <tr
+            ><th scope="row">In the car</th><td>A secure phone mount (windscreen or dashboard)</td
+            ></tr
+          >
+          <tr
+            ><th scope="row">Price</th><td
+              ><strong>Free</strong> — no subscription, no premium tier, no in-app purchases</td
+            ></tr
+          >
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <Section id="install" labelledby="install-title">
+    <div class="container--narrow wide">
+      <h2 id="install-title">Installation guide</h2>
+      <p>
+        If you’ve received the Trillian installer (an APK file) or another install source,
+        installing it takes a minute:
+      </p>
+      <ol class="steps">
+        <li>Open the installer file on your phone and tap <strong>Install</strong>.</li>
+        <li>
+          If Android says the app is from an unknown source, tap <strong>Settings</strong>, enable
+          <strong>Allow from this source</strong> for the app you’re installing from, then go back and
+          tap
+          <strong>Install</strong>.
+        </li>
+        <li>Open Trillian from your app drawer.</li>
+      </ol>
+      <Callout tone="warn" title="Install safely">
+        <ul>
+          <li>Only install Trillian from a source you trust.</li>
+          <li>
+            “Allow from this source” applies only to the app you’re installing from (for example
+            your file manager or browser). Don’t disable Android’s security protections globally.
+          </li>
+          <li>
+            Once Trillian is installed, you can switch that permission off again in Android
+            Settings.
+          </li>
+        </ul>
+      </Callout>
+
+      <h2 id="first-launch">First launch</h2>
+      <h3>1. Loading screen</h3>
+      <p>
+        You’ll see the helmet emblem and the TRILLIAN loading screen while the app reads your
+        settings and opens its local database — usually one to three seconds. Tap anywhere to skip.
+      </p>
+      <h3>2. Permissions</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Permissions">
+        <table>
+          <thead>
+            <tr
+              ><th scope="col">Permission</th><th scope="col">Why</th><th scope="col">Required?</th
+              ></tr
+            >
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Location</strong></td>
+              <td>To record your position on track. Choose <em>While using the app</em>.</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td><strong>Notifications</strong></td>
+              <td>To show recording status, including the “GPS signal lost” warning.</td>
+              <td>Optional</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">
+        Trillian never asks for “Allow all the time” and doesn’t request Physical Activity. Location
+        is only sampled during a session you start yourself.
+      </p>
+      <h3>3. Your driver name</h3>
+      <p>
+        Type the name you want to race under (2–100 characters) and tap <strong>LET’S RACE!!</strong
+        >. That’s it — no account, password or email. Your name is stored on your phone only.
+      </p>
+      <p>
+        Next: <a href={url('/how-it-works/')}>how to record your first session</a> or the full
+        <a href={url('/guide/')}>user guide</a>.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .status {
+    max-width: 46rem;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-4);
+    border-radius: 999px;
+    border: 1px solid var(--warn);
+    color: var(--warn);
+    font-weight: 600;
+  }
+  .dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--warn);
+  }
+  th[scope='row'] {
+    width: 30%;
+    white-space: nowrap;
+  }
+  .steps {
+    padding-left: 1.3rem;
+  }
+  .wide {
+    margin-inline: 0;
+  }
+  h2#first-launch {
+    margin-top: var(--sp-7);
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="This page doesn’t exist. Head back to the Trillian — Driving Coach homepage."
+  noindex
+>
+  <section class="container--narrow nf" aria-labelledby="nf-title">
+    <p class="eyebrow">Error 404</p>
+    <p class="code mono" aria-hidden="true">+0:00.404</p>
+    <h1 id="nf-title">Off track</h1>
+    <p class="lead">We couldn’t find that page. It may have moved, or the link may be mistyped.</p>
+    <div class="btn-row">
+      <a class="btn btn--primary" href={url('/')}>Back to the homepage</a>
+      <a class="btn btn--ghost" href={url('/guide/')}>Open the user guide</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    padding-block: var(--sp-9);
+  }
+  .code {
+    font-size: var(--fs-2xl);
+    color: var(--gold);
+    margin-bottom: var(--sp-2);
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+interface Props {
+  title: string;
+  /** Short mono label above the title, e.g. "01" or "LAPS". */
+  tag?: string;
+  href?: string;
+}
+const { title, tag, href } = Astro.props;
+---
+
+<article class="card feature-card">
+  {tag && <span class="tag">{tag}</span>}
+  <h3>{href ? <a href={href}>{title}</a> : title}</h3>
+  <slot />
+</article>
+
+<style>
+  .feature-card {
+    position: relative;
+    transition: border-color 0.2s var(--ease);
+  }
+  .feature-card:hover,
+  .feature-card:focus-within {
+    border-color: var(--border-strong);
+  }
+  .tag {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: var(--sp-3);
+  }
+  h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  h3 a:focus-visible {
+    outline: none;
+  }
+  .feature-card:has(a:focus-visible) {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+  .feature-card :global(p) {
+    color: var(--text-soft);
+    font-size: var(--fs-sm);
+  }
+</style>

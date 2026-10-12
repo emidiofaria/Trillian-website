@@ -1,0 +1,618 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Callout from '../components/Callout.astro';
+import { coachingCards } from '../content/data';
+import { siteConfig } from '../config/site';
+import { url } from '../lib/url';
+
+const topics = [
+  ['getting-started', 'Getting started'],
+  ['gps-permissions', 'GPS & permissions'],
+  ['circuit-setup', 'Circuit setup'],
+  ['recording', 'Recording a session'],
+  ['results', 'Reviewing results'],
+  ['coaching', 'Coaching'],
+  ['profile-sharing', 'Profile & sharing'],
+  ['troubleshooting', 'Troubleshooting'],
+  ['help', 'Need more help?'],
+] as const;
+---
+
+<BaseLayout
+  title="User guide"
+  description="The Trillian user guide: installation, GPS and permissions, circuit setup, recording, reading lap times, sectors, charts and the Analysis tab, coaching cards, sharing and troubleshooting."
+>
+  <PageHero eyebrow="User guide" title="Trillian user guide">
+    Everything you need to set up, record and understand your track sessions. Based on the Trillian
+    user manual v{siteConfig.manualVersion}.
+  </PageHero>
+
+  <div class="container guide">
+    <aside class="sidebar">
+      <div class="filter" data-filter hidden>
+        <label for="guide-filter">Filter topics</label>
+        <input
+          id="guide-filter"
+          type="search"
+          placeholder="e.g. GPS, sectors, Dream Lap"
+          autocomplete="off"
+        />
+        <p class="small muted" aria-live="polite" data-filter-status></p>
+      </div>
+      <nav aria-label="Guide contents">
+        <p class="toc-title">Contents</p>
+        <ol>
+          {
+            topics.map(([id, label]) => (
+              <li data-toc={id}>
+                <a href={`#${id}`}>{label}</a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+    </aside>
+
+    <div class="prose content">
+      <section id="getting-started" data-topic aria-labelledby="h-gs">
+        <h2 id="h-gs">Getting started</h2>
+        <h3>What you’ll need</h3>
+        <ul>
+          <li>An Android phone running {siteConfig.minAndroid} or newer</li>
+          <li>A phone mount for your car</li>
+          <li>A track day to attend</li>
+        </ul>
+        <h3>Installation</h3>
+        <p>See the <a href={url('/download/#install')}>installation guide</a>.</p>
+        <h3>The loading screen</h3>
+        <p>
+          Each launch shows the helmet emblem, then the TRILLIAN loading screen with a short
+          engineering note. The progress bar tracks the app genuinely getting ready — <em
+            >Preparing your garage</em
+          >
+          (reading settings), <em>Warming up the telemetry</em> (opening your local session database)
+          and
+          <em>Ready to roll</em>. It usually takes one to three seconds and never more than 8.
+        </p>
+        <p>
+          On the first 3 launches the screen is held for about 4 seconds so you can read the note (<em
+            >Tap to continue</em
+          >); after that it shows <em>Tap to skip</em>. You never have to tap. You can re-read the
+          note under <strong>Profile → About Trillian</strong>.
+        </p>
+        <h3>Your driver name</h3>
+        <p>
+          After permissions, enter the name you want to race under (2–100 characters) and tap
+          <strong>LET’S RACE!!</strong>. There are no accounts, passwords or email addresses in this
+          version. Your name is stored on your phone only, and Trillian remembers you on every later
+          launch.
+        </p>
+        <p class="small muted">
+          Accounts, cloud backup and signing in on a second phone are planned for a future version.
+          This version is deliberately offline-first.
+        </p>
+      </section>
+
+      <section id="gps-permissions" data-topic aria-labelledby="h-gps">
+        <h2 id="h-gps">GPS &amp; permissions</h2>
+        <h3>Permissions</h3>
+        <ul>
+          <li>
+            <strong>Location (required)</strong> — choose <em>While using the app</em> and make sure it’s
+            set to <em>precise</em>. Trillian never tracks you in the background: location is only
+            sampled during a session you started, with a notification visible the whole time. It
+            never asks for “Allow all the time”.
+          </li>
+          <li>
+            <strong>Notifications (optional)</strong> — shows recording status and the “GPS signal lost”
+            warning. Recording works without it; you can enable it later in Android Settings → Apps →
+            Trillian → Notifications.
+          </li>
+        </ul>
+        <p>Trillian does not ask for Physical Activity permission.</p>
+        <h3>Open the app early</h3>
+        <p>
+          Your first GPS fix of the day takes <strong>30 to 60 seconds</strong> outdoors from cold. Open
+          the app a couple of minutes before you walk out: the moment Home appears, it quietly starts
+          finding satellites, so Track Setup is ready when you reach the track edge.
+        </p>
+        <ul>
+          <li>Get out from under a roof, awning or garage.</li>
+          <li>The head start carries over from Home to Track Setup — you only wait once.</li>
+          <li>Searching stops when you leave the app, and after half an hour if left open.</li>
+          <li>
+            Start-line points are always taken fresh at the moment you tap CAPTURE — never from an
+            old reading.
+          </li>
+          <li><strong>Profile → About Trillian</strong> shows how long your last GPS fix took.</li>
+        </ul>
+      </section>
+
+      <section id="circuit-setup" data-topic aria-labelledby="h-cs">
+        <h2 id="h-cs">Circuit setup</h2>
+        <h3>Choosing your circuit</h3>
+        <ol>
+          <li>Tap <strong>START SESSION</strong>.</li>
+          <li>Type a name for the session and tap <strong>Start</strong>.</li>
+          <li>
+            Answer <em>Where are you driving?</em> with <strong>SELECT TRACK</strong> or <strong
+              >NEW CIRCUIT</strong
+            >.
+          </li>
+        </ol>
+        <h3>SELECT TRACK</h3>
+        <p>
+          The list shows every circuit that ships with Trillian plus the ones you’ve saved — each
+          with its name, location and start/finish line width. Tap yours, check the confirmation
+          screen (name, lap length, number of corners and typical lap time), then tap <strong
+            >START RECORDING</strong
+          > once your GPS is ready.
+        </p>
+        <p>
+          Built-in circuits were surveyed on foot, so Trillian knows the direction you drive through
+          the start/finish, how long a lap should take, and the shape of the track. Built-in
+          circuits can’t be renamed or deleted.
+        </p>
+        <h3>NEW CIRCUIT: capturing the start/finish line</h3>
+        <ol>
+          <li>
+            On the <strong>Track Setup</strong> screen, walk to one edge of the track at the start/finish
+            line.
+          </li>
+          <li>Wait for GPS accuracy to show <strong>&lt; 5 metres</strong>.</li>
+          <li>Tap <strong>Capture Point A</strong>.</li>
+          <li>
+            Walk across the track to the opposite edge and tap <strong>Capture Point B</strong>.
+          </li>
+          <li>
+            Check the distance between the points — roughly the track width (typically 10–15 m).
+          </li>
+          <li>Tap <strong>Start Recording</strong>.</li>
+          <li>
+            Choose <strong>SAVE &amp; START</strong> to keep the circuit, or <strong
+              >JUST START</strong
+            >.
+          </li>
+        </ol>
+        <p>You can capture the two points in either order.</p>
+        <Callout title="Tips for a good line">
+          <ul>
+            <li>Walk to the actual track edge, not the pit lane.</li>
+            <li>Wait for a good GPS signal before each capture.</li>
+            <li>
+              Pick a spot you cross every lap, once per lap — not a chicane, and not where the
+              circuit crosses itself.
+            </li>
+            <li>
+              If the screen switches off mid-setup, GPS picks straight back up when you return.
+            </li>
+          </ul>
+        </Callout>
+        <h3>Phone mounting</h3>
+        <ul>
+          <li>
+            Mount the phone securely where it won’t move — windscreen or dashboard mounts work well.
+          </li>
+          <li>Avoid cup-holder mounts; vibration affects the sensors.</li>
+          <li>Keep the phone plugged in for long sessions and turn off battery saver.</li>
+        </ul>
+      </section>
+
+      <section id="recording" data-topic aria-labelledby="h-rec">
+        <h2 id="h-rec">Recording a session</h2>
+        <h3>The Home screen</h3>
+        <p>
+          Home shows the brand hero, your <strong>best lap</strong> card, your <strong
+            >recent sessions</strong
+          > (newest first) and the <strong>START SESSION</strong> button.
+        </p>
+        <h3>While recording</h3>
+        <ul>
+          <li>The screen shows session duration, GPS status and lap count.</li>
+          <li>You can turn the screen off — recording continues in the background.</li>
+          <li>
+            Green GPS indicator = good signal. Yellow/red = weak signal; results may be affected.
+          </li>
+          <li>Trillian records GPS position, speed and heading, and phone motion.</li>
+        </ul>
+        <h3>Stopping</h3>
+        <p>
+          Open the app and tap <strong>Stop Recording</strong>. Lap times appear immediately — lap
+          detection, speed traces, the track map and session stats are all computed on your phone,
+          so it works perfectly in flight mode.
+        </p>
+        <h3>What counts as a lap?</h3>
+        <ul>
+          <li>Crossing the start/finish line you set up or selected.</li>
+          <li>At least 20 seconds long, and at least 50 metres away from the line.</li>
+          <li>Your first lap starts when you first cross the line. Drive at least 2 full laps.</li>
+        </ul>
+      </section>
+
+      <section id="results" data-topic aria-labelledby="h-res">
+        <h2 id="h-res">Reviewing results</h2>
+        <p>Tap any session on Home. Each session has four tabs.</p>
+        <h3>Laps</h3>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Laps tab columns">
+          <table>
+            <thead><tr><th scope="col">Column</th><th scope="col">Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>Lap #</td><td>Which lap (1, 2, 3…)</td></tr>
+              <tr><td>Time</td><td>Lap time in minutes:seconds.milliseconds</td></tr>
+              <tr><td>S1 / S2 / S3</td><td>Your three sector times</td></tr>
+              <tr
+                ><td>Delta</td><td>Difference from your best lap (+0.5 = slower, −0.5 = faster)</td
+                ></tr
+              >
+              <tr><td>★</td><td>Marks your best lap</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>What are sectors?</h3>
+        <p>
+          Each lap is split into three equal parts <strong>by distance driven</strong>. These are
+          the app’s own sectors, <strong>not the circuit’s official ones</strong> — useful for comparing
+          your laps with each other, not with a race timing screen. Splitting by distance (not time) keeps
+          each sector on the same stretch of road on every lap. A lap with too few GPS fixes shows no
+          sector times rather than a guess.
+        </p>
+        <h3>Chart</h3>
+        <p>
+          Speed (km/h) against distance from the start/finish line. Your best lap is blue, other
+          laps grey. For 10+ laps choose <strong>Fast</strong> (lightly smoothed) or <strong
+            >Detailed</strong
+          >
+          (full resolution).
+        </p>
+        <h3>Analysis</h3>
+        <ul>
+          <li>
+            <strong>Session at a glance</strong> — total distance, duration, max speed, average speed
+            (whole recording, including standing time) and best lap.
+          </li>
+          <li>
+            <strong>Track map</strong> — coloured by speed (blue slowest → amber → green fastest), red
+            where you braked, corners labelled T1, T2…, gold start/finish marker.
+          </li>
+          <li>
+            <strong>Lap chips</strong> — tap a lap to redraw the map, corner list and braking list for
+            it.
+          </li>
+          <li><strong>Corners</strong> — direction, degrees turned and apex speed.</li>
+          <li>
+            <strong>Braking zones</strong> — entry/exit speed, speed shed, duration and peak g, measured
+            from GPS speed.
+          </li>
+          <li><strong>Speed over the session</strong> — every lap including in- and out-laps.</li>
+        </ul>
+        <p class="small muted">
+          Corner numbers are the app’s own, in the order you drove — they won’t always match the
+          circuit’s map.
+        </p>
+        <h3>Managing sessions</h3>
+        <p>
+          <strong>Long-press</strong> a session on Home to <strong>Rename</strong> (1–100 characters)
+          or
+          <strong>Delete</strong> it. Deleting removes the laps, coaching insights and telemetry file
+          — it’s the only copy and cannot be undone.
+        </p>
+      </section>
+
+      <section id="coaching" data-topic aria-labelledby="h-co">
+        <h2 id="h-co">Coaching</h2>
+        <p>
+          The <strong>Coach</strong> tab shows a sector map, then between one and seven cards depending
+          on what your session supports. The app shows fewer cards rather than make something up.
+        </p>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Coaching cards">
+          <table>
+            <thead><tr><th scope="col">Card</th><th scope="col">When you’ll see it</th></tr></thead>
+            <tbody>
+              {
+                coachingCards.map((c) => (
+                  <tr>
+                    <>
+                      <td>
+                        <strong>{c.name}</strong>
+                      </td>
+                      <td>{c.when}</td>
+                    </>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <h3>The sector map</h3>
+        <p>
+          The circuit shape in three colours — <span class="s1">blue</span> sector 1,
+          <span class="s2">purple</span> sector 2, <span class="s3">orange</span> sector 3 — with a gold
+          dot on the start/finish line. For library circuits it’s the surveyed shape; for your own circuits
+          it’s drawn from your laps (following the line you drove, not the road edges), with a note saying
+          so. If your laps weren’t consistent enough, no map is shown; the cards are unaffected.
+        </p>
+        <h3>Your Dream Lap</h3>
+        <p>
+          Your fastest sector 1, 2 and 3 from any laps, added together. Example: best lap 1:12.4,
+          but stitched best sectors make 1:10.9 — 1.5 seconds available without driving anything you
+          haven’t already driven. If one lap holds all three best sectors, the app tells you you put
+          it all together.
+        </p>
+        <p>
+          It only appears with at least 3 good laps and sector data that adds up. If anything looks
+          off — for example two laps recorded as one — no Dream Lap is shown. It’s never drawn on
+          the map, because its sectors come from different laps.
+        </p>
+        <h3>Older sessions</h3>
+        <p>
+          When you open a session recorded before a sector update, Trillian re-measures its sectors
+          from the saved telemetry. Your lap times never change.
+        </p>
+      </section>
+
+      <section id="profile-sharing" data-topic aria-labelledby="h-ps">
+        <h2 id="h-ps">Profile &amp; sharing</h2>
+        <h3>Share cards</h3>
+        <ol>
+          <li>Open a session.</li>
+          <li>Tap <strong>Share</strong>.</li>
+          <li>
+            A card is generated with your best lap time, session date and track, and your name.
+          </li>
+          <li>Send it through messages, social apps, or save it to your gallery.</li>
+        </ol>
+        <h3>Your profile</h3>
+        <p>
+          Tap the profile icon (top right) for your driver name and initials, total sessions, total
+          laps and all-time best lap. Tap your name to change it — renaming never affects your
+          sessions.
+        </p>
+        <h3>About Trillian</h3>
+        <p>
+          At the bottom of Profile: the engineering note, your <strong>app version</strong> (for example
+          <code>2.92 (292)</code>) and your last GPS acquisition timings. Quote these when reporting
+          a problem.
+        </p>
+        <h3>Clear User Data</h3>
+        <Callout tone="warn" title="Permanent — cannot be undone">
+          <p>
+            <strong>Profile → Clear User Data → Delete everything</strong> removes your name, every session,
+            lap, coaching note and telemetry file. There’s no account or cloud backup to restore from,
+            so share anything you want to keep first.
+          </p>
+        </Callout>
+      </section>
+
+      <section id="troubleshooting" data-topic aria-labelledby="h-ts">
+        <h2 id="h-ts">Troubleshooting</h2>
+
+        <h3>GPS not locking</h3>
+        <p class="muted">Accuracy stays above 10 m, or shows “No GPS”.</p>
+        <ol>
+          <li>Check Location permission is granted and set to <strong>precise</strong>.</li>
+          <li>Go outside with a clear view of the sky.</li>
+          <li>Restart the app, or toggle Location off and on.</li>
+          <li>Wait 1–2 minutes — and next time open the app a few minutes before walking out.</li>
+        </ol>
+
+        <h3>“Getting a current GPS fix…” on Track Setup</h3>
+        <p>
+          The app has satellites but the last reading is too old to trust — common for a second or
+          two after the phone was in your pocket. Hold it still with a view of the sky; it clears
+          itself.
+        </p>
+
+        <h3>The app asks for my name again</h3>
+        <p>
+          The app’s data was cleared — by Clear User Data, Android’s “Clear storage”, a reinstall,
+          or full device storage. Sessions live on the phone only and can’t be recovered. If your
+          sessions are still there but you’re asked for a name, please report it.
+        </p>
+
+        <h3>Session stuck on “Processing”</h3>
+        <p>
+          Processing is entirely local, so it isn’t a connection problem. Go back to Home and reopen
+          the session, or wait a few moments for long sessions. If it persists, report it with your
+          app version.
+        </p>
+
+        <h3>No laps detected</h3>
+        <ul>
+          <li>
+            Capture the start/finish close to the racing line — driving more than about 15 m to the
+            side of it can prevent detection.
+          </li>
+          <li>
+            Wait for GPS accuracy under 5 m before capturing, and a good lock before recording.
+          </li>
+          <li>Drive at least 2 full laps; laps must be at least 20 seconds long.</li>
+        </ul>
+        <p>
+          Recent versions tell you how many times you passed the start/finish and how far to the
+          side you were, and can correct a small capture error automatically.
+        </p>
+
+        <h3>Lap times are about half what I drove</h3>
+        <p>
+          Your start/finish is at a point you pass twice per lap (e.g. a figure-of-eight). Set it at
+          a point you pass <strong>once</strong> per lap.
+        </p>
+
+        <h3>Fewer laps than I drove, each about twice as long</h3>
+        <p>
+          You’re quicker than the circuit library expects, so a real crossing was refused — the app
+          adds a note when this happens. It isn’t something you did wrong; please
+          <a href={`mailto:${siteConfig.contactEmail}`}>let us know</a> so the circuit entry can be corrected.
+        </p>
+
+        <h3>Lap times are in minutes, not seconds</h3>
+        <p>
+          On older versions, walking across the start/finish before driving could be counted as a
+          lap. Since version 3.0, slow crossings aren’t counted. Starting the recording when you get
+          in the car still gives cleaner statistics.
+        </p>
+
+        <h3>The circuit list is empty</h3>
+        <p>
+          Use <strong>NEW CIRCUIT</strong> — it always works — and report the problem with your app version.
+        </p>
+
+        <h3>App crashes when recording</h3>
+        <ol>
+          <li>Make sure you have 500 MB or more free storage.</li>
+          <li>Close other apps to free memory.</li>
+          <li>Restart your phone.</li>
+          <li>Update to the latest app version.</li>
+        </ol>
+      </section>
+
+      <section id="help" data-topic aria-labelledby="h-help">
+        <h2 id="h-help">Need more help?</h2>
+        <p>
+          Check the <a href={url('/faq/')}>FAQ</a>, then email
+          <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> with:
+        </p>
+        <ul>
+          <li>your device model and Android version,</li>
+          <li>
+            your Trillian version from <strong>Profile → About Trillian</strong> (e.g. <code
+              >2.92 (292)</code
+            >, including the number in brackets),
+          </li>
+          <li>a description of the issue, and screenshots if helpful.</li>
+        </ul>
+      </section>
+
+      <p class="no-results" data-no-results hidden>
+        No topics match your filter. Try another word, or <a href="#guide-filter"
+          >clear the filter</a
+        >.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const wrap = document.querySelector<HTMLElement>('[data-filter]');
+  const input = document.getElementById('guide-filter') as HTMLInputElement | null;
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  const empty = document.querySelector<HTMLElement>('[data-no-results]');
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-topic]'));
+
+  if (wrap && input && status && empty) {
+    wrap.hidden = false;
+    const index = sections.map((s) => ({ el: s, text: (s.textContent ?? '').toLowerCase() }));
+    const apply = () => {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      for (const { el, text } of index) {
+        const match = !q || text.includes(q);
+        el.hidden = !match;
+        document
+          .querySelector<HTMLElement>(`[data-toc="${el.id}"]`)
+          ?.toggleAttribute('hidden', !match);
+        if (match) shown++;
+      }
+      empty.hidden = shown > 0;
+      status.textContent = q
+        ? `${shown} of ${sections.length} topics match “${input.value.trim()}”`
+        : '';
+    };
+    input.addEventListener('input', apply);
+    empty.querySelector('a')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      input.value = '';
+      apply();
+      input.focus();
+    });
+  }
+</script>
+
+<style>
+  .guide {
+    display: grid;
+    gap: var(--sp-6);
+    padding-top: var(--sp-6);
+  }
+  @media (min-width: 60rem) {
+    .guide {
+      grid-template-columns: 15rem 1fr;
+      gap: var(--sp-8);
+    }
+    .sidebar {
+      position: sticky;
+      top: calc(var(--header-h) + var(--sp-4));
+      align-self: start;
+      max-height: calc(100vh - var(--header-h) - var(--sp-6));
+      overflow-y: auto;
+    }
+  }
+  .content {
+    max-width: 46rem;
+    min-width: 0;
+  }
+  .content > section:first-child h2 {
+    margin-top: var(--sp-4);
+  }
+  .filter label {
+    display: block;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--sp-2);
+  }
+  .filter input {
+    width: 100%;
+    padding: var(--sp-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+  }
+  .filter input:focus-visible {
+    border-color: var(--accent);
+  }
+  .toc-title {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: var(--sp-4) 0 var(--sp-2);
+  }
+  nav ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid var(--border);
+  }
+  nav li {
+    margin: 0;
+  }
+  nav a {
+    display: block;
+    padding: var(--sp-1) var(--sp-4);
+    color: var(--text-soft);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+  }
+  nav a:hover {
+    color: var(--text);
+    box-shadow: inset 2px 0 0 var(--accent);
+  }
+  .s1 {
+    color: var(--sector-1);
+  }
+  .s2 {
+    color: var(--sector-2);
+  }
+  .s3 {
+    color: var(--sector-3);
+  }
+  .no-results {
+    padding: var(--sp-5);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+  }
+</style>

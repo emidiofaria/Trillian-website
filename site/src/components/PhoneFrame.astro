@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  eager?: boolean;
+  width?: number;
+}
+const { src, alt, caption, eager = false, width = 340 } = Astro.props;
+---
+
+<figure class="phone">
+  <div class="frame">
+    <Image
+      src={src}
+      alt={alt}
+      width={width}
+      widths={[width, width * 2]}
+      sizes={`(max-width: 40rem) 80vw, ${width}px`}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+      format="webp"
+    />
+  </div>
+  {caption && <figcaption class="small muted">{caption}</figcaption>}
+</figure>
+
+<style>
+  .phone {
+    margin: 0 auto;
+    max-width: min(80vw, 22rem);
+  }
+  .frame {
+    border-radius: 2.2rem;
+    padding: 0.6rem;
+    background: linear-gradient(160deg, #2a3446, #0d121b);
+    border: 1px solid var(--border-strong);
+    box-shadow:
+      var(--shadow),
+      0 0 0 1px rgb(255 255 255 / 0.03) inset;
+  }
+  .frame :global(img) {
+    border-radius: 1.7rem;
+    width: 100%;
+    height: auto;
+  }
+  figcaption {
+    text-align: center;
+    margin-top: var(--sp-3);
+  }
+</style>

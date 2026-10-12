@@ -1,0 +1,26 @@
+---
+interface Props {
+  id?: string;
+  tone?: 'default' | 'alt';
+  /** id of the heading that labels this section */
+  labelledby?: string;
+  class?: string;
+}
+const { id, tone = 'default', labelledby, class: cls = '' } = Astro.props;
+---
+
+<section id={id} class:list={['section', `section--${tone}`, cls]} aria-labelledby={labelledby}>
+  <div class="container">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--sp-8);
+  }
+  .section--alt {
+    background: var(--bg-alt);
+    border-block: 1px solid var(--border);
+  }
+</style>

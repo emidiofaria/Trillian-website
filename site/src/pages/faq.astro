@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Toc from '../components/Toc.astro';
+import FaqItem from '../components/FaqItem.astro';
+import { faqGroups } from '../content/data';
+import { siteConfig } from '../config/site';
+import { url } from '../lib/url';
+
+const toc = faqGroups.map((g) => [g.id, g.title] as const);
+---
+
+<BaseLayout
+  title="FAQ"
+  description="Answers to common questions about Trillian: cost, supported Android devices, lap timing accuracy, sectors, coaching and the Dream Lap, offline use and how your data is stored."
+>
+  <PageHero eyebrow="FAQ" title="Frequently asked questions">
+    Practical answers for track-day drivers. Can’t find yours? Check the
+    <a href={url('/guide/')}>user guide</a>.
+    <Toc slot="after" items={toc} label="FAQ topics" />
+  </PageHero>
+
+  <div class="container--narrow faq">
+    {
+      faqGroups.map((g) => (
+        <section id={g.id} aria-labelledby={`${g.id}-title`}>
+          <h2 id={`${g.id}-title`}>{g.title}</h2>
+          {g.items.map((f) => (
+            <FaqItem question={f.q} id={`q-${f.id}`}>
+              <Fragment set:html={f.a} />
+            </FaqItem>
+          ))}
+        </section>
+      ))
+    }
+    <section aria-labelledby="more-title" class="more">
+      <h2 id="more-title">Still stuck?</h2>
+      <p>
+        Email <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> with your device
+        model, Android version and your Trillian version from <strong
+          >Profile → About Trillian</strong
+        >.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .faq {
+    padding-top: var(--sp-6);
+  }
+  section {
+    margin-top: var(--sp-7);
+  }
+  .more {
+    border-top: 1px solid var(--border);
+    padding-top: var(--sp-6);
+  }
+</style>

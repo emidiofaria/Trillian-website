@@ -1,0 +1,229 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Callout from '../components/Callout.astro';
+import SectorDiagram from '../components/SectorDiagram.astro';
+import CtaDownload from '../components/CtaDownload.astro';
+import { url } from '../lib/url';
+---
+
+<BaseLayout
+  title="How it works"
+  description="How to use Trillian at a track day: get a GPS fix early, select or capture your circuit’s start/finish line, mount your phone, record your session and review your laps and coaching afterwards."
+>
+  <PageHero eyebrow="How it works" title="From paddock to debrief">
+    Five steps, one phone. All the analysis happens after your session — nothing distracts you while
+    you drive.
+  </PageHero>
+
+  <Section labelledby="steps-title">
+    <h2 id="steps-title" class="visually-hidden">Steps</h2>
+    <ol class="timeline">
+      <li id="step-1">
+        <span class="num" aria-hidden="true">01</span>
+        <div>
+          <h3>Prepare your phone and get a GPS fix</h3>
+          <p>
+            The first GPS fix of the day is the slow one — outdoors from cold it can take
+            <strong>30 to 60 seconds</strong>. So open Trillian a couple of minutes before you walk
+            out: as soon as the Home screen appears, it starts finding satellites in the background.
+          </p>
+          <ul>
+            <li>
+              Grant <strong>Location</strong> permission (“While using the app”, set to precise).
+            </li>
+            <li>
+              Get out from under roofs, awnings and garages — GPS needs a clear view of the sky.
+            </li>
+            <li>
+              A <strong>GPS fix</strong> is your phone knowing where it is. Track Setup shows
+              <em>Acquiring GPS…</em> until the fix is good enough, then the satellite count and accuracy.
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li id="step-2">
+        <span class="num" aria-hidden="true">02</span>
+        <div>
+          <h3>Select a circuit or capture a new start/finish line</h3>
+          <p>
+            Tap <strong>START SESSION</strong>, name the session and answer <em
+              >Where are you driving?</em
+            >
+          </p>
+          <div class="grid grid--2">
+            <div class="card">
+              <h4>SELECT TRACK</h4>
+              <p>
+                Pick a built-in or saved circuit from the list, check its name and lap length on the
+                confirmation screen, and you’re ready. No walking, no capturing.
+              </p>
+            </div>
+            <div class="card">
+              <h4>NEW CIRCUIT</h4>
+              <ol>
+                <li>Walk to one edge of the track at the start/finish line.</li>
+                <li>
+                  Wait for GPS accuracy under <strong>5 metres</strong>, then tap Capture Point A.
+                </li>
+                <li>Walk to the opposite edge and tap Capture Point B.</li>
+                <li>Check the distance shown is roughly the track width.</li>
+                <li>
+                  Choose <strong>SAVE &amp; START</strong> to reuse it next time, or <strong
+                    >JUST START</strong
+                  >.
+                </li>
+              </ol>
+            </div>
+          </div>
+          <Callout title="Picking a good start/finish spot">
+            <ul>
+              <li>Stand on the part of the track you actually drive — not the pit lane.</li>
+              <li>Choose a spot you cross every lap, and only <strong>once</strong> per lap.</li>
+              <li>Avoid chicanes and places where the circuit crosses over itself.</li>
+            </ul>
+          </Callout>
+          <p class="small muted">
+            Either way, <strong>START</strong> stays greyed out until your GPS fix is good and current.
+          </p>
+        </div>
+      </li>
+
+      <li id="step-3">
+        <span class="num" aria-hidden="true">03</span>
+        <div>
+          <h3>Mount the phone</h3>
+          <ul>
+            <li>
+              Mount it securely where it won’t move — windscreen or dashboard mounts work well.
+            </li>
+            <li>Avoid cup-holder mounts; vibration affects the sensors.</li>
+            <li>Keep the phone plugged in for long sessions and turn off battery saver.</li>
+          </ul>
+        </div>
+      </li>
+
+      <li id="step-4">
+        <span class="num" aria-hidden="true">04</span>
+        <div>
+          <h3>Record your session</h3>
+          <p>
+            Tap <strong>Start Recording</strong>. A notification shows that recording is active, and
+            you can turn the screen off — recording continues in the background.
+          </p>
+          <ul>
+            <li>
+              A green GPS indicator means a good signal; yellow or red means results may be
+              affected.
+            </li>
+            <li>If the GPS signal drops, the app warns you but keeps recording.</li>
+            <li>Drive at least two full laps past the start/finish line.</li>
+          </ul>
+        </div>
+      </li>
+
+      <li id="step-5">
+        <span class="num" aria-hidden="true">05</span>
+        <div>
+          <h3>Stop, review and learn</h3>
+          <p>
+            Tap <strong>Stop Recording</strong>. Lap times appear immediately — detection runs on
+            your phone, so there’s nothing to upload and nothing to wait for. Open the session to
+            explore:
+          </p>
+          <ul>
+            <li><strong>Laps</strong> — lap times, sector times, deltas and your best lap.</li>
+            <li>
+              <strong>Coach</strong> — a sector map and the coaching cards your data supports.
+            </li>
+            <li><strong>Chart</strong> — speed against distance for every lap.</li>
+            <li>
+              <strong>Analysis</strong> — track map, corners, braking zones and session stats.
+            </li>
+          </ul>
+          <p>
+            A <strong>lap delta</strong> is the difference from your best lap (+0.5 means half a second
+            slower). <strong>Telemetry</strong> is the GPS and motion data recorded during your session.
+          </p>
+        </div>
+      </li>
+    </ol>
+  </Section>
+
+  <Section tone="alt" labelledby="sectors-title">
+    <div class="split">
+      <div>
+        <SectionHeading
+          id="sectors-title"
+          eyebrow="Good to know"
+          title="Sectors are three equal thirds by distance"
+        >
+          Trillian has no way of knowing where a circuit’s official timing sectors are, so it splits
+          every lap into three equal thirds by distance. That keeps each sector on the same piece of
+          road from lap to lap — perfect for comparing your own laps.
+        </SectionHeading>
+        <Callout tone="warn" title="Coaching is post-session, not live">
+          <p>
+            Trillian never coaches you while you drive. Every insight is calculated after you stop
+            recording, from the laps you actually completed.
+          </p>
+        </Callout>
+      </div>
+      <SectorDiagram />
+    </div>
+  </Section>
+
+  <Section labelledby="next-title">
+    <h2 id="next-title">Ready to try it?</h2>
+    <p>Check your phone meets the requirements, then follow the installation guide.</p>
+    <div class="btn-row">
+      <CtaDownload />
+      <a class="btn btn--ghost" href={url('/guide/')}>Open the user guide</a>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--sp-6);
+    counter-reset: none;
+  }
+  .timeline > li {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: var(--sp-4);
+    padding-bottom: var(--sp-6);
+    border-bottom: 1px solid var(--border);
+  }
+  .timeline > li:last-child {
+    border-bottom: 0;
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .timeline ul,
+  .timeline ol {
+    padding-left: 1.2rem;
+  }
+  .timeline h4 {
+    margin-bottom: var(--sp-2);
+  }
+  @media (max-width: 30rem) {
+    .timeline > li {
+      grid-template-columns: 1fr;
+      gap: var(--sp-2);
+    }
+  }
+</style>
