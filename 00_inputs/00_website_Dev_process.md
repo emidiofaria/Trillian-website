@@ -13,7 +13,7 @@ suggest me the best model to do the task
 
 # Step 1.0
 (copilot CLI OPUS 5.5)
-Inputs: Images, User manual, SRS -> all inside passed dir
+Inputs: Implementation plan, Images, User manual, SRS -> all inside passed dir
 "Read in detail this implementation plan : /home/00_sandbox/test_026_Trillian_website
 prepare a detailled step by step plan to implemente it"
 
