@@ -10,7 +10,7 @@ const path = Astro.url.pathname;
 <header class="site-header">
   <div class="container bar">
     <a class="brand" href={url('/')} aria-label="Trillian — Driving Coach, home">
-      <Image src={helmet} alt="" width={36} height={36} loading="eager" />
+      <Image src={helmet} alt="" width={52} height={52} loading="eager" />
       <span class="wordmark">TRILLIAN</span>
     </a>
 
@@ -101,12 +101,24 @@ const path = Astro.url.pathname;
     text-decoration: none;
   }
   .brand img {
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
   }
   .wordmark {
     font-weight: 800;
     letter-spacing: 0.22em;
-    font-size: 1rem;
+    font-size: 1.375rem;
+  }
+  @media (max-width: 25rem) {
+    .brand img {
+      width: 44px;
+      height: 44px;
+    }
+    .wordmark {
+      font-size: 1.2rem;
+      letter-spacing: 0.18em;
+    }
   }
   .nav ul {
     list-style: none;
