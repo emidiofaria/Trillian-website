@@ -1,7 +1,7 @@
 # Trillian — Driving Coach Website: Step-by-Step Implementation Plan
 
-Source plan: `Trillian_Copilot_CLI_Implementation_Plan.md` (phases 0–7).
-Sources of truth: `USER_MANUAL.md` (v1.1, public claims), `DrivingCoach_SRS_v1.md` (context only).
+Source plan: `00_inputs/Trillian_Copilot_CLI_Implementation_Plan.md` (phases 0–7).
+Sources of truth: `00_inputs/USER_MANUAL.md` (v1.1, public claims), `00_inputs/DrivingCoach_SRS_v1.md` (context only).
 Root: `Trillian-website/` (git repo, remote `emidiofaria/Trillian-website`)
 
 ## 1. Problem & approach

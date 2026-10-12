@@ -7,8 +7,10 @@ A static, 8-page marketing + documentation site for **Trillian — Driving Coach
 GPS lap timer and **post-session** driving coach. Code lives in `site/` (Astro 4 + TypeScript, plain CSS).
 
 ## Sources of truth — never edit them from website work
-- `USER_MANUAL.md` (v1.1) — every public claim must be traceable to it.
-- `DrivingCoach_SRS_v1.md` — context only. Do **not** publish SRS-only/back-end/V2 features.
+Project inputs live in `00_inputs/` and are read-only:
+- `00_inputs/USER_MANUAL.md` (v1.1) — every public claim must be traceable to it.
+- `00_inputs/DrivingCoach_SRS_v1.md` — context only. Do **not** publish SRS-only/back-end/V2 features.
+- `00_inputs/Trillian_Copilot_CLI_Implementation_Plan.md` — original brief; the adopted plan is `docs/WEBSITE_IMPLEMENTATION_PLAN.md`.
 - `01_pictures/` — originals. Run `npm run assets` to regenerate optimised copies in `site/src/assets` and `site/public`.
 - When adding or changing a claim, update `docs/CONTENT_FACT_CHECK.md`.
 

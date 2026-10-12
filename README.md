@@ -8,8 +8,10 @@ and post-session driving coach. Built with [Astro](https://astro.build) 4 + Type
 | `site/` | Astro project (all website code) |
 | `docs/` | Implementation plan, content fact-check, QA checklist |
 | `AGENTS.md` | Rules for contributors/AI agents (product facts, forbidden claims) |
-| `USER_MANUAL.md` | **Source of truth** for every public claim — do not edit from website work |
-| `DrivingCoach_SRS_v1.md` | Product context only — never quote unreleased/back-end features |
+| `00_inputs/` | Project inputs — read-only for website work |
+| `00_inputs/USER_MANUAL.md` | **Source of truth** for every public claim |
+| `00_inputs/DrivingCoach_SRS_v1.md` | Product context only — never quote unreleased/back-end features |
+| `00_inputs/Trillian_Copilot_CLI_Implementation_Plan.md` | Original brief (phases 0–7); the adopted plan is `docs/WEBSITE_IMPLEMENTATION_PLAN.md` |
 | `01_pictures/` | Original images (copied & optimised by `npm run assets`) |
 
 ## Requirements

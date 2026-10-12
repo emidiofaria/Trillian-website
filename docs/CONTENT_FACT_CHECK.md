@@ -1,6 +1,6 @@
 # Content fact-check matrix
 
-Every public claim on the website, with its source in `USER_MANUAL.md` (v1.1).
+Every public claim on the website, with its source in `00_inputs/USER_MANUAL.md` (v1.1).
 Status: **VERIFIED** (in manual, used) · **OWNER CONFIRMED** (owner decision) ·
 **NEEDS OWNER CONFIRMATION** (not published until confirmed) · **OUT OF SCOPE** (deliberately excluded).
 
